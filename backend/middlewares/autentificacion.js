@@ -1,14 +1,6 @@
-var express = require('express');
-var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 
 var clave_sereta = require('../config/config').secreta;
-
-// Inicializar variables
-var app = express();
-
-// Importar modelo
-var Usuario = require('../models/usuario');
 
 // =====================================
 // Verificar token - Middleware

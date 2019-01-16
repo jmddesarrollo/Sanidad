@@ -1,6 +1,5 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
 
 var mdwAutentificacion = require('../middlewares/autentificacion');
 
@@ -23,20 +22,6 @@ app.get('/', (req, res, next) => {
             res.status(200).json({ status: 'success', usuarios });
         });
 });
-
-// =====================================
-// Verificar token - Middleware - No es muy util
-// Bloquea codigo posterior si no se ejecuta next.
-// =====================================
-// app.use('/', (req, res, next) => {
-//     var token = req.query.token;
-
-//     jwt.verify(token, clave_sereta, (err, decoded) => {
-//         if (err) { return res.status(401).json({ status: 'error', mensaje: 'Usuario no autentificado.', errors: err }); }
-//     });
-
-//     next();
-// });
 
 // =====================================
 // Crear nuevo usuario con middleware

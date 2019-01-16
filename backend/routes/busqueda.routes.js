@@ -45,7 +45,12 @@ app.get('/todo/:busqueda', (req, res, next) => {
             buscarUsuarios(busqueda, regex)
         ])
         .then(respuestas => {
-            return res.status(200).json({ status: 'success', hospitales: respuestas[0], medicos: respuestas[1], usuarios: respuestas[2] });
+            return res.status(200).json({
+                status: 'success',
+                hospitales: respuestas[0],
+                medicos: respuestas[1],
+                usuarios: respuestas[2]
+            });
         });
 });
 

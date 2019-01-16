@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { Observable } from 'rxjs/Observable';
 
 import { Usuario } from '../../models/usuario.model';
 
 import { URL_SERVICIOS } from '../../config/config';
 import { Router } from '@angular/router';
+
 
 @Injectable()
 export class UsuarioService {
@@ -29,7 +33,14 @@ export class UsuarioService {
     const headers = new Headers({ 'Content-Type': 'application/json'});
     const url = URL_SERVICIOS + '/login';
 
-    return this._http.post(url, params, {headers: headers}).map(res => res.json());
+    return this._http.post(url, params, {headers: headers})
+            .map(res => res.json())
+            .catch(err => {
+              console.log(err.error);
+              console.log(err.status);
+              console.log(err.error.mensaje);
+              return Observable.throw( err );
+            });
   }
 
   logout() {
