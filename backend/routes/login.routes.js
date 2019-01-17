@@ -10,6 +10,8 @@ var app = express();
 // Importar modelo
 var Usuario = require('../models/usuario');
 
+var mdwAutentificacion = require('../middlewares/autentificacion');
+
 // =====================================
 // Login del usuario
 // =====================================
@@ -32,11 +34,21 @@ app.post('/', (req, res) => {
         // Quitar contraseña de objeto de salida.
         usuario.password = undefined;
 
-        // Crear token: objeto, contraseña secreta general de encriptación, tiempo de expiración en sg.
-        var token = jwt.sign({ usuario: usuario }, clave_secreta, { expiresIn: 1440 });
+        // Crear token: objeto, contraseña secreta general de encriptación, tiempo de expiración en sg. (4h)
+        var token = jwt.sign({ usuario: usuario }, clave_secreta, { expiresIn: 14400 });
 
         res.status(200).json({ status: 'success', usuario, token });
     })
+});
+
+// =====================================
+// Renovar el token
+// =====================================
+app.get('/renovartoken', mdwAutentificacion.verificarToken, (req, res) => {
+    // Crear token: objeto, contraseña secreta general de encriptación, tiempo de expiración en sg. (4h)
+    var token = jwt.sign({ usuario: req.usuario }, clave_secreta, { expiresIn: 14400 });
+
+    res.status(200).json({ status: 'success', token });
 });
 
 module.exports = app;

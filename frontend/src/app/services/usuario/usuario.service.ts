@@ -52,6 +52,23 @@ export class UsuarioService {
     this._router.navigate(['/login']);
   }
 
+  renovartoken() {
+    const headers = new Headers({ 'Content-Type': 'application/json'});
+    const url = URL_SERVICIOS + '/login/renovartoken';
+
+    return this._http.get(url, {headers: headers}).map( (respuesta: any) => {
+      this.token = respuesta.token;
+      localStorage.setItem('token', this.token);
+
+      return true;
+    })
+    .catch( err => {
+      this._router.navigate(['/login']);
+      console.log ('No fue posible renovar el token');
+      return Observable.throw( err );
+    });
+  }
+
   crearUsuario(usuario: Usuario) {
     const params = JSON.stringify(usuario);
     const headers = new Headers({ 'Content-Type': 'application/json'});
