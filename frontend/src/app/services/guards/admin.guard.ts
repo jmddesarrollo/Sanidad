@@ -11,7 +11,7 @@ export class AdminGuard implements CanActivate {
   ) {
 
   }
-  canActivate() {
+  canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this._usuarioService.usuario.rol === 'ADMIN_ROLE') {
       console.log('Permiso concedido');
       return true;
